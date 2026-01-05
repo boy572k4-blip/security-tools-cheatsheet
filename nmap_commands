@@ -1,0 +1,52 @@
+🔍 Host Discovery (Phát hiện host sống)
+Command	Description
+nmap 10.10.10.10	Default scan (1000 TCP ports phổ biến)
+nmap -sn 10.10.10.0/24	Ping scan – tìm host sống trong subnet
+nmap -Pn 10.10.10.10	Bỏ qua ping (khi ICMP bị chặn)
+nmap -PS 10.10.10.10	TCP SYN ping
+nmap -PE 10.10.10.10	ICMP echo ping
+🔌 Port Scanning
+Command	Description
+nmap -p 80 10.10.10.10	Quét port 80
+nmap -p 22,80,443 10.10.10.10	Quét nhiều port
+nmap -p- 10.10.10.10	Quét tất cả 65535 TCP ports
+nmap --top-ports 1000 10.10.10.10	Quét các port phổ biến
+⚡ Scan Techniques
+Option	Description
+-sS	TCP SYN scan (nhanh, stealth)
+-sT	TCP connect scan
+-sU	UDP scan
+-sA	ACK scan (firewall detection)
+-sN	NULL scan
+-sF	FIN scan
+-sX	Xmas scan
+🧠 Service & Version Detection
+Command	Description
+nmap -sV 10.10.10.10	Detect service versions
+nmap -O 10.10.10.10	OS detection
+nmap -A 10.10.10.10	OS + version + scripts
+📜 NSE Scripts (Enumeration)
+Command	Description
+nmap -sC 10.10.10.10	Default safe scripts
+nmap --script http-enum 10.10.10.10	Enumerate web directories
+nmap --script smb-enum-shares 10.10.10.10	Enumerate SMB shares
+nmap --script vuln 10.10.10.10	Scan common vulnerabilities
+🕒 Timing & Performance
+Option	Description
+-T0	Paranoid (rất chậm, stealth)
+-T1	Sneaky
+-T3	Normal (default)
+-T4	Aggressive (HTB / THM hay dùng)
+-T5	Insane (dễ bị phát hiện)
+💾 Output (Lưu kết quả)
+Option	Description
+-oN scan.txt	Output dạng text
+-oX scan.xml	Output XML
+-oG scan.gnmap	Grepable output
+-oA scan	Lưu tất cả định dạng
+🔐 Firewall / Evasion
+Option	Description
+-f	Fragment packets
+--data-length 50	Thêm dữ liệu giả
+--source-port 53	Giả mạo source port
+-D RND:5	Decoy scan
