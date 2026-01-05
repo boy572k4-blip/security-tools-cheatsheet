@@ -1,52 +1,43 @@
-🔍 Host Discovery (Phát hiện host sống)
-Command	Description
-nmap 10.10.10.10	Default scan (1000 TCP ports phổ biến)
-nmap -sn 10.10.10.0/24	Ping scan – tìm host sống trong subnet
-nmap -Pn 10.10.10.10	Bỏ qua ping (khi ICMP bị chặn)
-nmap -PS 10.10.10.10	TCP SYN ping
-nmap -PE 10.10.10.10	ICMP echo ping
-🔌 Port Scanning
-Command	Description
-nmap -p 80 10.10.10.10	Quét port 80
-nmap -p 22,80,443 10.10.10.10	Quét nhiều port
-nmap -p- 10.10.10.10	Quét tất cả 65535 TCP ports
-nmap --top-ports 1000 10.10.10.10	Quét các port phổ biến
-⚡ Scan Techniques
-Option	Description
--sS	TCP SYN scan (nhanh, stealth)
--sT	TCP connect scan
--sU	UDP scan
--sA	ACK scan (firewall detection)
--sN	NULL scan
--sF	FIN scan
--sX	Xmas scan
-🧠 Service & Version Detection
-Command	Description
-nmap -sV 10.10.10.10	Detect service versions
-nmap -O 10.10.10.10	OS detection
-nmap -A 10.10.10.10	OS + version + scripts
-📜 NSE Scripts (Enumeration)
-Command	Description
-nmap -sC 10.10.10.10	Default safe scripts
-nmap --script http-enum 10.10.10.10	Enumerate web directories
-nmap --script smb-enum-shares 10.10.10.10	Enumerate SMB shares
-nmap --script vuln 10.10.10.10	Scan common vulnerabilities
-🕒 Timing & Performance
-Option	Description
--T0	Paranoid (rất chậm, stealth)
--T1	Sneaky
--T3	Normal (default)
--T4	Aggressive (HTB / THM hay dùng)
--T5	Insane (dễ bị phát hiện)
-💾 Output (Lưu kết quả)
-Option	Description
--oN scan.txt	Output dạng text
--oX scan.xml	Output XML
--oG scan.gnmap	Grepable output
--oA scan	Lưu tất cả định dạng
-🔐 Firewall / Evasion
-Option	Description
--f	Fragment packets
---data-length 50	Thêm dữ liệu giả
---source-port 53	Giả mạo source port
--D RND:5	Decoy scan
+Tùy chọn quét
+Tùy chọn Nmap	Sự miêu tả
+10.10.10.0/24	Phạm vi mạng mục tiêu.
+-sn	Tắt tính năng quét cổng.
+-Pn	Vô hiệu hóa yêu cầu ICMP Echo
+-n	Tắt độ phân giải DNS.
+-PE	Thực hiện quét ping bằng cách sử dụng ICMP Echo Requests đối với mục tiêu.
+--packet-trace	Hiển thị tất cả các gói đã gửi và nhận.
+--reason	Hiển thị lý do cho một kết quả cụ thể.
+--disable-arp-ping	Tắt yêu cầu ping ARP.
+--top-ports=<num>	Quét các cổng hàng đầu được chỉ định là thường xuyên nhất.
+-p-	Quét tất cả các cổng.
+-p22-110	Quét tất cả các cổng từ 22 đến 110.
+-p22,25	Chỉ quét các cổng được chỉ định 22 và 25.
+-F	Quét 100 cổng hàng đầu.
+-sS	Thực hiện TCP SYN-Scan.
+-sA	Thực hiện TCP ACK-Scan.
+-sU	Thực hiện quét UDP.
+-sV	Quét các dịch vụ đã phát hiện để tìm các phiên bản của chúng.
+-sC	Thực hiện quét tập lệnh với các tập lệnh được phân loại là "mặc định".
+--script <script>	Thực hiện quét tập lệnh bằng cách sử dụng các tập lệnh được chỉ định.
+-O	Thực hiện Quét phát hiện hệ điều hành để xác định hệ điều hành của mục tiêu.
+-A	Thực hiện Phát hiện hệ điều hành, Phát hiện dịch vụ và quét tuyến đường theo dõi.
+-D RND:5	Đặt số lượng mồi nhử ngẫu nhiên sẽ được sử dụng để quét mục tiêu.
+-e	Chỉ định giao diện mạng được sử dụng để quét.
+-S 10.10.10.200	Chỉ định địa chỉ IP nguồn để quét.
+-g	Chỉ định cổng nguồn để quét.
+--dns-server <ns>	Độ phân giải DNS được thực hiện bằng cách sử dụng một máy chủ định danh được chỉ định.
+Tùy chọn đầu ra
+Tùy chọn Nmap	Sự miêu tả
+-oA filename	Lưu trữ kết quả ở tất cả các định dạng có sẵn bắt đầu bằng tên "tên tệp".
+-oN filename	Lưu trữ kết quả ở định dạng bình thường với tên "tên tệp".
+-oG filename	Lưu trữ kết quả ở định dạng "grepable" với tên là "tên tệp".
+-oX filename	Lưu trữ kết quả ở định dạng XML với tên là "tên tệp".
+Tùy chọn hiệu suất
+Tùy chọn Nmap	Sự miêu tả
+--max-retries <num>	Đặt số lần thử lại để quét các cổng cụ thể.
+--stats-every=5s	Hiển thị trạng thái quét 5 giây một lần.
+-v/-vv	Hiển thị đầu ra chi tiết trong quá trình quét.
+--initial-rtt-timeout 50ms	Đặt giá trị thời gian được chỉ định làm thời gian chờ RTT ban đầu.
+--max-rtt-timeout 100ms	Đặt giá trị thời gian được chỉ định làm thời gian chờ RTT tối đa.
+--min-rate 300	Đặt số lượng gói sẽ được gửi đồng thời.
+-T <0-5>	Chỉ định mẫu thời gian cụ thể.
